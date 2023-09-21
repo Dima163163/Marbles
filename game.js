@@ -14,35 +14,40 @@
       player: 0,
       computer: 0,
     };
-    const userFigure = prompt(`камень, ножницы, бумага`, '');
-    let action;
-    if (typeof userFigure === 'string' && userFigure !== null) {
-      const computerFigure = getFigure();
-      if (userFigure.toLowerCase()[0] === figure[0][0] &&
-          computerFigure[0] === figure[1][0] ||
-          userFigure.toLowerCase()[0] === figure[1][0] &&
-          [0] === figure[2][0] ||
-          userFigure.toLowerCase()[0] === figure[2][0] &&
-          computerFigure[0] === figure[0][0]
-      ) {
-        ++result.player;
-        alert('Победил пользователь, он начнет!');
-      } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
-        playGameRSP();
+    if (result.player === 0 || result.computer === 0) {
+      const userFigure = prompt(`камень, ножницы, бумага`, '');
+      let action;
+      if (typeof userFigure === 'string' && userFigure !== null) {
+        const computerFigure = getFigure();
+        if (userFigure.toLowerCase()[0] === figure[0][0] &&
+            computerFigure[0] === figure[1][0] ||
+            userFigure.toLowerCase()[0] === figure[1][0] &&
+            [0] === figure[2][0] ||
+            userFigure.toLowerCase()[0] === figure[2][0] &&
+            computerFigure[0] === figure[0][0]
+        ) {
+          result.player += 1;
+          alert('В камень ножницы бумага победил пользователь, он начинает!');
+          return result;
+        } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
+          alert('Ничья, играем еще раз!');
+          playGameRSP();
+        } else {
+          result.computer += 1;
+          alert('В камень ножницы бумага победил компьютер, он начинает!');
+          return result;
+        }
       } else {
-        ++result.computer;
-        alert('Победил компьютер, он начнет!');
+        action = confirm('Точно ли вы хотите выйти?');
+        if (action) {
+          alert('Вы выбрали завершить игру');
+          return;
+        } else {
+          playGameRSP();
+        }
       }
-    } else {
-      action = confirm('Точно ли вы хотите выйти?');
-      if (action) {
-        alert('Вы выбрали завершить игру');
-        return;
-      } else {
-        playGameRSP();
-      }
+      return result;
     }
-    return result;
   };
 
   const getEvenOrOdd = (arr) => arr[getRandomIntIncInclusive(0, 1)];
@@ -53,27 +58,34 @@
       player: 5,
       computer: 5,
     };
-    const resultRSP = playGameRSP();
+    console.log('countMarbles.computer0', countMarbles.computer);
+    console.log('countMarbles.player0', countMarbles.player);
     let flag;
 
+    const resultRSP = playGameRSP();
+    const newGame = () => {
+      const question = confirm('Сыграем еще разок?');
+      if (question) {
+        alert('Играем заново!');
+        game();
+      } else {
+        alert('Вы отказались продолжить');
+        return;
+      }
+    };
+
+    console.log('resultRSP', resultRSP);
     if (resultRSP.player > resultRSP.computer) {
       flag = true;
     } else {
       flag = false;
     }
-
+    console.log(flag);
+    let count = 0;
     return function start() {
-      const newGame = () => {
-        const question = confirm('Хотите сыграть еще?');
-        if (question) {
-          countMarbles.player = 5;
-          countMarbles.computer = 5;
-          start();
-        } else {
-          alert('Вы отказались продолжить');
-          return;
-        }
-      };
+      console.log('Заходим в старт', count++);
+      console.log('countMarbles.computer1', countMarbles.computer);
+      console.log('countMarbles.player1', countMarbles.player);
       if (countMarbles.computer !== 0 && countMarbles.player !== 0) {
         let guessTheNumberUser;
         let guessTheNumberComputer;
@@ -183,11 +195,11 @@
       } else {
         if (countMarbles.player > countMarbles.computer) {
           alert(`
-        Игра окончена! \n
-        Вы победили! \n
-        У вас: ${countMarbles.player} \n
-        У компьютера: ${countMarbles.computer} 
-        `);
+          Игра окончена! \n
+          Вы победили! \n
+          У вас: ${countMarbles.player} \n
+          У компьютера: ${countMarbles.computer} 
+          `);
           newGame();
         } else {
           alert(`
