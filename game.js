@@ -54,7 +54,7 @@
 
   const game = () => {
     const evenOdd = ['четное', 'нечетное'];
-    let countMarbles = {
+    const countMarbles = {
       player: 5,
       computer: 5,
     };
@@ -73,10 +73,8 @@
         const question = confirm('Сыграем еще разок?');
         if (question) {
           alert('Играем заново!');
-          countMarbles = {
-            player: 5,
-            computer: 5,
-          };
+          countMarbles.player = 5;
+          countMarbles.computer = 5;
           const resultRSP = playGameRSP();
 
           if (resultRSP.player > resultRSP.computer) {
