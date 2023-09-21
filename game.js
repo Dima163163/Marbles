@@ -26,14 +26,14 @@
             userFigure.toLowerCase()[0] === figure[2][0] &&
             computerFigure[0] === figure[0][0]
         ) {
-          result.player += 1;
+          ++result.player;
           alert('В камень ножницы бумага победил пользователь, он начинает!');
           return result;
         } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
           alert('Ничья, играем еще раз!');
           playGameRSP();
         } else {
-          result.computer += 1;
+          ++result.computer;
           alert('В камень ножницы бумага победил компьютер, он начинает!');
           return result;
         }
@@ -80,16 +80,10 @@
     } else {
       flag = false;
     }
-    console.log(flag);
-    let count = 0;
     return function start() {
-      console.log('Заходим в старт', count++);
-      console.log('countMarbles.computer1', countMarbles.computer);
-      console.log('countMarbles.player1', countMarbles.player);
       if (countMarbles.computer !== 0 && countMarbles.player !== 0) {
         let guessTheNumberUser;
         let guessTheNumberComputer;
-
         if (flag) {
           guessTheNumberUser =
           +prompt(`Загадай число от 1 до ${countMarbles.player}`);
