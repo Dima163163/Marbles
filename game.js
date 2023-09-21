@@ -54,33 +54,42 @@
 
   const game = () => {
     const evenOdd = ['четное', 'нечетное'];
-    const countMarbles = {
+    let countMarbles = {
       player: 5,
       computer: 5,
     };
-    console.log('countMarbles.computer0', countMarbles.computer);
-    console.log('countMarbles.player0', countMarbles.player);
     let flag;
 
     const resultRSP = playGameRSP();
-    const newGame = () => {
-      const question = confirm('Сыграем еще разок?');
-      if (question) {
-        alert('Играем заново!');
-        game();
-      } else {
-        alert('Вы отказались продолжить');
-        return;
-      }
-    };
 
-    console.log('resultRSP', resultRSP);
     if (resultRSP.player > resultRSP.computer) {
       flag = true;
     } else {
       flag = false;
     }
+
     return function start() {
+      const newGame = () => {
+        const question = confirm('Сыграем еще разок?');
+        if (question) {
+          alert('Играем заново!');
+          countMarbles = {
+            player: 5,
+            computer: 5,
+          };
+          const resultRSP = playGameRSP();
+
+          if (resultRSP.player > resultRSP.computer) {
+            flag = true;
+          } else {
+            flag = false;
+          }
+          start();
+        } else {
+          alert('Вы отказались продолжить');
+          return;
+        }
+      };
       if (countMarbles.computer !== 0 && countMarbles.player !== 0) {
         let guessTheNumberUser;
         let guessTheNumberComputer;
