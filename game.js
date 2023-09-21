@@ -17,7 +17,7 @@
     if (result.player === 0 || result.computer === 0) {
       const userFigure = prompt(`камень, ножницы, бумага`, '');
       let action;
-      if (typeof userFigure === 'string' && userFigure !== null) {
+      if (typeof userFigure === 'string' && userFigure !== '') {
         const computerFigure = getFigure();
         if (userFigure.toLowerCase()[0] === figure[0][0] &&
             computerFigure[0] === figure[1][0] ||
@@ -37,6 +37,8 @@
           alert('В камень ножницы бумага победил компьютер, он начинает!');
           return result;
         }
+      } else if (userFigure === '') {
+        playGameRSP();
       } else {
         action = confirm('Точно ли вы хотите выйти?');
         if (action) {
@@ -52,13 +54,8 @@
 
   const getEvenOrOdd = (arr) => arr[getRandomIntIncInclusive(0, 1)];
 
-  const game = () => {
-    const evenOdd = ['четное', 'нечетное'];
-    const countMarbles = {
-      player: 5,
-      computer: 5,
-    };
-    let flag;
+  const strockeindicator = () => {
+    let flag = true;
 
     const resultRSP = playGameRSP();
 
@@ -67,6 +64,16 @@
     } else {
       flag = false;
     }
+    return flag;
+  };
+
+  const game = () => {
+    const evenOdd = ['четное', 'нечетное'];
+    let flag = strockeindicator();
+    const countMarbles = {
+      player: 5,
+      computer: 5,
+    };
 
     return function start() {
       const newGame = () => {
@@ -75,13 +82,7 @@
           alert('Играем заново!');
           countMarbles.player = 5;
           countMarbles.computer = 5;
-          const resultRSP = playGameRSP();
-
-          if (resultRSP.player > resultRSP.computer) {
-            flag = true;
-          } else {
-            flag = false;
-          }
+          flag = strockeindicator();
           start();
         } else {
           alert('Вы отказались продолжить');
