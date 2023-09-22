@@ -51,8 +51,6 @@
       } else {
         playGameRSP();
       }
-      console.log('result', result);
-      return result;
     }
   };
 
