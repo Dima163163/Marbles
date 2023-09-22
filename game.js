@@ -29,15 +29,13 @@
               computerFigure[0] === figure[0][0]
           ) {
             alert('В камень ножницы бумага победил пользователь, он начинает!');
-            result.player = 1;
-            result.computer = 0;
+            result.player++;
           } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
             alert('Ничья, играем еще раз!');
             playGameRSP();
           } else {
             alert('В камень ножницы бумага победил компьютер, он начинает!');
-            result.player = 0;
-            result.computer = 1;
+            result.computer++;
           }
         } else {
           playGameRSP();
