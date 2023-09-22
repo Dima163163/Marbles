@@ -17,34 +17,39 @@
     if (result.player === 0 || result.computer === 0) {
       const userFigure = prompt(`камень, ножницы, бумага`, '');
       let action;
-      console.log('userFigure', userFigure);
-      if (isNaN(userFigure) && userFigure !== '') {
-        const computerFigure = getFigure();
-        if (userFigure.toLowerCase()[0] === figure[0][0] &&
-            computerFigure[0] === figure[1][0] ||
-            userFigure.toLowerCase()[0] === figure[1][0] &&
-            [0] === figure[2][0] ||
-            userFigure.toLowerCase()[0] === figure[2][0] &&
-            computerFigure[0] === figure[0][0]
-        ) {
-          ++result.player;
-          alert('В камень ножницы бумага победил пользователь, он начинает!');
-          console.log('resultЧеловек', result);
-          return result;
-        } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
-          alert('Ничья, играем еще раз!');
-          playGameRSP();
-        } else {
-          ++result.computer;
-          alert('В камень ножницы бумага победил компьютер, он начинает!');
-          console.log('resultКомп', result);
-          return result;
-        }
-      } else if (userFigure === null) {
-        action = confirm('Точно ли вы хотите выйти?');
-        if (action) {
-          alert('Вы выбрали завершить игру');
-          return;
+      if (userFigure === figure[0] || userFigure === figure[1] ||
+      userFigure === figure[2]) {
+        console.log('userFigure', userFigure);
+        if (isNaN(userFigure) && userFigure !== '') {
+          const computerFigure = getFigure();
+          if (userFigure.toLowerCase()[0] === figure[0][0] &&
+              computerFigure[0] === figure[1][0] ||
+              userFigure.toLowerCase()[0] === figure[1][0] &&
+              [0] === figure[2][0] ||
+              userFigure.toLowerCase()[0] === figure[2][0] &&
+              computerFigure[0] === figure[0][0]
+          ) {
+            ++result.player;
+            alert('В камень ножницы бумага победил пользователь, он начинает!');
+            console.log('resultЧеловек', result);
+            return result;
+          } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
+            alert('Ничья, играем еще раз!');
+            playGameRSP();
+          } else {
+            ++result.computer;
+            alert('В камень ножницы бумага победил компьютер, он начинает!');
+            console.log('resultКомп', result);
+            return result;
+          }
+        } else if (userFigure === null) {
+          action = confirm('Точно ли вы хотите выйти?');
+          if (action) {
+            alert('Вы выбрали завершить игру');
+            return;
+          } else {
+            playGameRSP();
+          }
         } else {
           playGameRSP();
         }
@@ -185,13 +190,8 @@
           if (userResult === evenOdd[0] && guessTheNumberComputer % 2 === 0 ||
           userResult === evenOdd[1] &&
           guessTheNumberComputer % 2 !== 0) {
-            if (guessTheNumberComputer > countMarbles.computer) {
-              countMarbles.computer -= countMarbles.computer;
-              countMarbles.player += countMarbles.computer;
-            } else {
-              countMarbles.computer -= guessTheNumberComputer;
-              countMarbles.player += guessTheNumberComputer;
-            }
+            countMarbles.computer -= guessTheNumberComputer;
+            countMarbles.player += guessTheNumberComputer;
             alert(`
               Пользователь угадал! \n
               Вы выбрали: ${userResult} \n
@@ -203,13 +203,8 @@
             flag = true;
             start();
           } else {
-            if (guessTheNumberComputer > countMarbles.player) {
-              countMarbles.computer += countMarbles.player;
-              countMarbles.player -= countMarbles.player;
-            } else {
-              countMarbles.computer += guessTheNumberComputer;
-              countMarbles.player -= guessTheNumberComputer;
-            }
+            countMarbles.computer += guessTheNumberComputer;
+            countMarbles.player -= guessTheNumberComputer;
             alert(`
               Пользователь не угадал! \n
               Вы выбрали: ${userResult} \n
