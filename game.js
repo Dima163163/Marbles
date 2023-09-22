@@ -16,11 +16,11 @@
     };
     if (result.player === 0 || result.computer === 0) {
       const userFigure = prompt(`камень, ножницы, бумага`, '');
+      const computerFigure = getFigure();
       let action;
       if (userFigure === figure[0] || userFigure === figure[1] ||
       userFigure === figure[2]) {
         if (isNaN(userFigure) && userFigure !== '') {
-          const computerFigure = getFigure();
           if (userFigure.toLowerCase()[0] === figure[0][0] &&
               computerFigure[0] === figure[1][0] ||
               userFigure.toLowerCase()[0] === figure[1][0] &&
