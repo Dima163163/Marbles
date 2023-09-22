@@ -19,7 +19,6 @@
       let action;
       if (userFigure === figure[0] || userFigure === figure[1] ||
       userFigure === figure[2]) {
-        console.log('userFigure', userFigure);
         if (isNaN(userFigure) && userFigure !== '') {
           const computerFigure = getFigure();
           if (userFigure.toLowerCase()[0] === figure[0][0] &&
@@ -29,27 +28,25 @@
               userFigure.toLowerCase()[0] === figure[2][0] &&
               computerFigure[0] === figure[0][0]
           ) {
-            ++result.player;
             alert('В камень ножницы бумага победил пользователь, он начинает!');
-            console.log('resultЧеловек', result);
-            return result;
+            result.player = 1;
+            result.computer = 0;
           } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
             alert('Ничья, играем еще раз!');
             playGameRSP();
           } else {
-            ++result.computer;
             alert('В камень ножницы бумага победил компьютер, он начинает!');
-            console.log('resultКомп', result);
-            return result;
+            result.player = 0;
+            result.computer = 1;
           }
-        } else if (userFigure === null) {
-          action = confirm('Точно ли вы хотите выйти?');
-          if (action) {
-            alert('Вы выбрали завершить игру');
-            return;
-          } else {
-            playGameRSP();
-          }
+        } else {
+          playGameRSP();
+        }
+      } else if (userFigure === null) {
+        action = confirm('Точно ли вы хотите выйти?');
+        if (action) {
+          alert('Вы выбрали завершить игру');
+          return;
         } else {
           playGameRSP();
         }
@@ -76,7 +73,6 @@
         return;
       }
     }
-    console.log('flag', flag);
 
     return flag;
   };
@@ -88,7 +84,6 @@
       player: 5,
       computer: 5,
     };
-    console.log(flag);
 
     return function start() {
       if (flag === undefined) {
@@ -127,7 +122,6 @@
         if (flag) {
           guessTheNumberUser =
           prompt(`Загадай число от 1 до ${countMarbles.player}`);
-          console.log(guessTheNumberUser);
           if (guessTheNumberUser === null) {
             endGame();
           } else {
@@ -136,15 +130,19 @@
               start();
             } else {
               const computerResult = getEvenOrOdd(evenOdd);
-              console.log('guessTheNumberUser', guessTheNumberUser);
               if (guessTheNumberUser !== null) {
                 guessTheNumberUser = Number(guessTheNumberUser);
                 if (computerResult === evenOdd[0] &&
                 guessTheNumberUser % 2 === 0 ||
                 computerResult === evenOdd[1] &&
                 guessTheNumberUser % 2 !== 0) {
-                  countMarbles.player -= guessTheNumberUser;
-                  countMarbles.computer += guessTheNumberUser;
+                  if (guessTheNumberUser > countMarbles.player) {
+                    countMarbles.player -= countMarbles.player;
+                    countMarbles.computer += countMarbles.player;
+                  } else {
+                    countMarbles.player -= guessTheNumberUser;
+                    countMarbles.computer += guessTheNumberUser;
+                  }
                   alert(`
                   Компьютер угадал! \n
                   Вы выбрали: ${guessTheNumberUser} \n
@@ -156,8 +154,13 @@
                   flag = false;
                   start();
                 } else {
-                  countMarbles.player += guessTheNumberUser;
-                  countMarbles.computer -= guessTheNumberUser;
+                  if (guessTheNumberUser > countMarbles.computer) {
+                    countMarbles.player += countMarbles.computer;
+                    countMarbles.computer -= countMarbles.computer;
+                  } else {
+                    countMarbles.player += guessTheNumberUser;
+                    countMarbles.computer -= guessTheNumberUser;
+                  }
                   alert(`
                   Компьютер не угадал! \n
                   Вы выбрали: ${guessTheNumberUser} \n
@@ -178,20 +181,22 @@
           guessTheNumberComputer =
           getRandomIntIncInclusive(1, countMarbles.computer);
           const question = confirm('Число четное?', '');
-          console.log('guessTheNumberComputer', guessTheNumberComputer);
-          console.log('question', question);
           let userResult;
           if (question) {
             userResult = evenOdd[0];
           } else {
             userResult = evenOdd[1];
           }
-          console.log('userResult', userResult);
           if (userResult === evenOdd[0] && guessTheNumberComputer % 2 === 0 ||
           userResult === evenOdd[1] &&
           guessTheNumberComputer % 2 !== 0) {
-            countMarbles.computer -= guessTheNumberComputer;
-            countMarbles.player += guessTheNumberComputer;
+            if (guessTheNumberComputer > countMarbles.computer) {
+              countMarbles.computer -= countMarbles.computer;
+              countMarbles.player += countMarbles.computer;
+            } else {
+              countMarbles.computer -= guessTheNumberComputer;
+              countMarbles.player += guessTheNumberComputer;
+            }
             alert(`
               Пользователь угадал! \n
               Вы выбрали: ${userResult} \n
@@ -203,8 +208,13 @@
             flag = true;
             start();
           } else {
-            countMarbles.computer += guessTheNumberComputer;
-            countMarbles.player -= guessTheNumberComputer;
+            if (guessTheNumberComputer > countMarbles.player) {
+              countMarbles.computer += countMarbles.player;
+              countMarbles.player -= countMarbles.player;
+            } else {
+              countMarbles.computer += guessTheNumberComputer;
+              countMarbles.player -= guessTheNumberComputer;
+            }
             alert(`
               Пользователь не угадал! \n
               Вы выбрали: ${userResult} \n
