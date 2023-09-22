@@ -104,6 +104,17 @@
         }
       };
 
+      const endGame = () => {
+        const action = confirm('Точно ли вы хотите выйти?');
+        if (action) {
+          alert('Вы выбрали закончить игру');
+          return;
+        } else {
+          start();
+        }
+        return;
+      };
+
       if (countMarbles.computer !== 0 &&
       countMarbles.player !== 0 && flag !== undefined) {
         let guessTheNumberUser;
@@ -111,51 +122,50 @@
         if (flag) {
           guessTheNumberUser =
           prompt(`Загадай число от 1 до ${countMarbles.player}`);
-          if (guessTheNumberUser > countMarbles.player ||
-          guessTheNumberUser < 1 || isNaN(guessTheNumberUser)) {
-            start();
+          console.log(guessTheNumberUser);
+          if (guessTheNumberUser === null) {
+            endGame();
           } else {
-            const computerResult = getEvenOrOdd(evenOdd);
-            console.log('guessTheNumberUser', guessTheNumberUser);
-            if (guessTheNumberUser !== null) {
-              guessTheNumberUser = Number(guessTheNumberUser);
-              if (computerResult === evenOdd[0] &&
-              guessTheNumberUser % 2 === 0 ||
-              computerResult === evenOdd[1] &&
-              guessTheNumberUser % 2 !== 0) {
-                countMarbles.player -= guessTheNumberUser;
-                countMarbles.computer += guessTheNumberUser;
-                alert(`
-                Компьютер угадал! \n
-                Вы выбрали: ${guessTheNumberUser} \n
-                Компьютер выбрал: ${computerResult} \n
-                Количество шариков \n
-                Компьютер: ${countMarbles.computer} \n
-                Игрок: ${countMarbles.player}
-                `);
-                flag = false;
-                start();
-              } else {
-                countMarbles.player += guessTheNumberUser;
-                countMarbles.computer -= guessTheNumberUser;
-                alert(`
-                Компьютер не угадал! \n
-                Вы выбрали: ${guessTheNumberUser} \n
-                Компьютер выбрал: ${computerResult} \n
-                Количество шариков \n
-                Компьютер: ${countMarbles.computer} \n
-                Игрок: ${countMarbles.player}
-                `);
-                flag = false;
-                start();
-              }
+            if (guessTheNumberUser > countMarbles.player ||
+            guessTheNumberUser < 1 || isNaN(guessTheNumberUser)) {
+              start();
             } else {
-              const action = confirm('Точно ли вы хотите выйти?');
-              if (action) {
-                alert('Вы выбрали закончить игру');
-                return;
+              const computerResult = getEvenOrOdd(evenOdd);
+              console.log('guessTheNumberUser', guessTheNumberUser);
+              if (guessTheNumberUser !== null) {
+                guessTheNumberUser = Number(guessTheNumberUser);
+                if (computerResult === evenOdd[0] &&
+                guessTheNumberUser % 2 === 0 ||
+                computerResult === evenOdd[1] &&
+                guessTheNumberUser % 2 !== 0) {
+                  countMarbles.player -= guessTheNumberUser;
+                  countMarbles.computer += guessTheNumberUser;
+                  alert(`
+                  Компьютер угадал! \n
+                  Вы выбрали: ${guessTheNumberUser} \n
+                  Компьютер выбрал: ${computerResult} \n
+                  Количество шариков \n
+                  Компьютер: ${countMarbles.computer} \n
+                  Игрок: ${countMarbles.player}
+                  `);
+                  flag = false;
+                  start();
+                } else {
+                  countMarbles.player += guessTheNumberUser;
+                  countMarbles.computer -= guessTheNumberUser;
+                  alert(`
+                  Компьютер не угадал! \n
+                  Вы выбрали: ${guessTheNumberUser} \n
+                  Компьютер выбрал: ${computerResult} \n
+                  Количество шариков \n
+                  Компьютер: ${countMarbles.computer} \n
+                  Игрок: ${countMarbles.player}
+                  `);
+                  flag = false;
+                  start();
+                }
               } else {
-                start();
+                endGame();
               }
             }
           }
