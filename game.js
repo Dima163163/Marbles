@@ -110,7 +110,7 @@
           guessTheNumberUser =
           prompt(`Загадай число от 1 до ${countMarbles.player}`);
           if (guessTheNumberUser > countMarbles.player ||
-          guessTheNumberUser < 1) {
+          guessTheNumberUser < 1 || isNaN(guessTheNumberUser)) {
             start();
           } else {
             const computerResult = getEvenOrOdd(evenOdd);
