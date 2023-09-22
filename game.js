@@ -52,6 +52,7 @@
         playGameRSP();
       }
     }
+    return result;
   };
 
   const getEvenOrOdd = (arr) => arr[getRandomIntIncInclusive(0, 1)];
@@ -60,6 +61,7 @@
     let flag;
 
     const resultRSP = playGameRSP();
+    console.log(resultRSP);
     if (resultRSP !== undefined) {
       if (resultRSP.player > resultRSP.computer) {
         flag = true;
