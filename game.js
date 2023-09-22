@@ -14,7 +14,7 @@
       player: 0,
       computer: 0,
     };
-    if (result.player === 0 || result.computer === 0) {
+    if (result.player === result.computer) {
       const userFigure = prompt(`камень, ножницы, бумага`, '');
       const computerFigure = getFigure();
       let action;
